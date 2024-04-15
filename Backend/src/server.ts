@@ -1,5 +1,5 @@
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
+import express, { Express, Request, Response } from 'express';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -12,8 +12,8 @@ app.use(express.json());
 // Routes
 // Add your API routes here
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, MERN stack!");
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello, MERN stack!');
 });
 
 app.listen(PORT, () => {
