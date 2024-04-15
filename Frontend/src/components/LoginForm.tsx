@@ -49,7 +49,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="text-primary">Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="" {...field} />
               </FormControl>
               <FormMessage className="text-xs font-light text-red-400" />
             </FormItem>
