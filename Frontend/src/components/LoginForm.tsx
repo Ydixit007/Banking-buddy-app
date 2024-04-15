@@ -13,14 +13,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import LinkButton from "./LinkButton";
 
 const LoginForm = () => {
   const formSchema = z.object({
     username: z.string().min(2, {
       message: "incorrect username",
     }),
-    password: z.string().min(2, {
-      message: "incorrect password",
+    password: z.string().min(6, {
+      message: "Password short",
     }),
   });
 
@@ -62,13 +63,14 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="text-primary">Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input type="password" placeholder="" {...field} />
               </FormControl>
               <FormMessage className="text-xs font-light text-red-400" />
             </FormItem>
           )}
         />
-        <Button className="mt-4" type="submit">Submit</Button>
+        <Button className="mt-4" type="submit">Login</Button>
+        <LinkButton href="/signup" label="Signup" className="bg-secondary text-gray-300 hover:bg-gray-800"/>
       </form>
     </Form>
   );

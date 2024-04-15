@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import LinkButton from "./LinkButton";
 
 /* 
     Form Fields
@@ -32,7 +33,6 @@ const SignUpForm = () => {
     phone: z.string().min(10, {
         message: "incorrect Phone number",
       }).max(10),
-    dob:  z.string().transform((str) => new Date(str)),
     password: z.string().min(6, {message: "Password short",}).max(20, {message: "password too long",})
   });
 
@@ -42,16 +42,21 @@ const SignUpForm = () => {
       fullName: "",
       email: "",
       phone: "",
-      dob: new Date(),
       password: ""
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const response = await fetch("https://sturdy-broccoli-vww95rqqppvfwv77-5000.app.github.dev/api/register",{
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+    console.log(await response.json())
   }
 
   return (
@@ -98,19 +103,6 @@ const SignUpForm = () => {
         />
         <FormField
           control={form.control}
-          name="dob"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-primary">Date of birth</FormLabel>
-              <FormControl>
-                <Input type="date" placeholder="" {...field} />
-              </FormControl>
-              <FormMessage className="text-xs font-light text-red-400" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -123,6 +115,7 @@ const SignUpForm = () => {
           )}
         />
         <Button className="mt-4" type="submit">Submit</Button>
+        <LinkButton href="/login" label="Login" className="bg-secondary text-gray-300 hover:bg-gray-800"/>
       </form>
     </Form>
   );
