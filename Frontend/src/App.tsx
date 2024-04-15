@@ -1,10 +1,23 @@
 import './App.css'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Login from './routes/Login';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login />,
+  },
+]);
 
 function App() {
 
   return (
-    <main className='bg-slate-600 h-screen w-full'>
-    </main>
+    <div className="dark antialiased">
+      <RouterProvider router={router} />
+    </div>
   )
 }
 
