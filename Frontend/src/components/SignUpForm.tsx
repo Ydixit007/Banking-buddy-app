@@ -28,12 +28,18 @@ const SignUpForm = () => {
       message: "incorrect Name",
     }),
     email: z.string().email({
-        message: "incorrect Email",
-      }),
-    phone: z.string().min(10, {
+      message: "incorrect Email",
+    }),
+    phone: z
+      .string()
+      .min(10, {
         message: "incorrect Phone number",
-      }).max(10),
-    password: z.string().min(6, {message: "Password short",}).max(20, {message: "password too long",})
+      })
+      .max(10),
+    password: z
+      .string()
+      .min(6, { message: "Password short" })
+      .max(20, { message: "password too long" }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,26 +48,28 @@ const SignUpForm = () => {
       fullName: "",
       email: "",
       phone: "",
-      password: ""
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await fetch("https://sturdy-broccoli-vww95rqqppvfwv77-5000.app.github.dev/api/register",{
-      method: 'POST',
-      mode: 'no-cors',
+    const response = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
       headers: {
-          'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    })
-    console.log(await response.json())
+    });
+    console.log(await response.json());
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="text-primary gap-2 min-w-[24rem] p-4 bg-slate-900 rounded-lg flex flex-col">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="text-primary gap-2 min-w-[24rem] p-4 bg-slate-900 rounded-lg flex flex-col"
+      >
         <FormField
           control={form.control}
           name="fullName"
@@ -114,8 +122,14 @@ const SignUpForm = () => {
             </FormItem>
           )}
         />
-        <Button className="mt-4" type="submit">Submit</Button>
-        <LinkButton href="/login" label="Login" className="bg-secondary text-gray-300 hover:bg-gray-800"/>
+        <Button className="mt-4" type="submit">
+          Submit
+        </Button>
+        <LinkButton
+          href="/login"
+          label="Login"
+          className="bg-secondary text-gray-300 hover:bg-grey-800"
+        />
       </form>
     </Form>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,9 +15,12 @@ import { Input } from "@/components/ui/input";
 import LinkButton from "./LinkButton";
 
 const LoginForm = () => {
+
+  const navigate = useNavigate();
+
   const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "incorrect username",
+    email: z.string().email({
+      message: "incorrect Email",
     }),
     password: z.string().min(6, {
       message: "Password short",
@@ -28,29 +30,44 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const user = await response.json();
+    if(user.status == "ok"){
+      localStorage.setItem("auth", user);
+      localStorage.setItem("token", user.token);
+      navigate("/dashboard");
+    }else{
+      alert("login failed - " + user.message)
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="text-primary gap-2 min-w-[24rem] p-4 bg-slate-900 rounded-lg flex flex-col">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="text-primary gap-2 min-w-[24rem] p-4 bg-slate-900 rounded-lg flex flex-col"
+      >
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-primary">Username</FormLabel>
+              <FormLabel className="text-primary">Email</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input type="email" placeholder="" {...field} />
               </FormControl>
               <FormMessage className="text-xs font-light text-red-400" />
             </FormItem>
@@ -69,8 +86,14 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button className="mt-4" type="submit">Login</Button>
-        <LinkButton href="/signup" label="Signup" className="bg-secondary text-gray-300 hover:bg-gray-800"/>
+        <Button className="mt-4" type="submit">
+          Login
+        </Button>
+        <LinkButton
+          href="/signup"
+          label="Signup"
+          className="bg-secondary text-gray-300 hover:bg-gray-800"
+        />
       </form>
     </Form>
   );
