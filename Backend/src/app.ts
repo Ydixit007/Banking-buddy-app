@@ -6,6 +6,7 @@ import { errorHandlerMiddleware } from "./middlewares/error";
 import loanRoute from "./routes/loan.route";
 import transactionsRoute from "./routes/transactions.route";
 import beneficiariesRoute from "./routes/beneficiaries.route";
+import cros from "cors";
 
 config({
   path: "./.env",
@@ -16,6 +17,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 // middlewares
 app.use(express.json());
+app.use(cros());
 
 // routes
 app.use("/api/v1/user", userRoute);

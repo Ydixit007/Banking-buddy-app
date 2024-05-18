@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -13,9 +13,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LinkButton from "./LinkButton";
+import { useDispatch } from "react-redux";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useLoginMutation } from "@/redux/api/user";
+import { loginUser } from "@/redux/reducers/userReducer";
+import { MessageApiResponse } from "@/types/types";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
+  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
 
   const formSchema = z.object({
@@ -35,22 +43,17 @@ const LoginForm = () => {
     },
   });
 
-  // 2. Define a submit handler.
+  // submit handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    const user = await response.json();
-    if(user.status == "ok"){
-      localStorage.setItem("auth", user);
-      localStorage.setItem("token", user.token);
+    const res = await login({ email: values.email, password: values.password })
+    if (res.data) {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      dispatch(loginUser(res.data));
       navigate("/dashboard");
-    }else{
-      alert("login failed - " + user.message)
+    } else {
+      const error = res.error as FetchBaseQueryError;
+      const message = (error.data as MessageApiResponse).message;
+      console.log(message);
     }
   }
 
