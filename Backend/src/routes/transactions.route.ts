@@ -1,8 +1,5 @@
 import express from "express";
-import {
-  depositMoney,
-  transferMoney,
-} from "../controllers/Transactions.controller";
+import { depositMoney, transferMoney } from "../controllers/transactions.controller";
 
 const transactionsRoute = express.Router();
 

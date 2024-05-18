@@ -2,6 +2,7 @@ export interface User {
   fullName: string;
   email: string;
   address: string;
+  phone: number;
   role: string;
   accountNumber: number;
   accountBalance: number;

@@ -5,7 +5,7 @@ const Navbar = ({ children }: { children: ReactElement }) => {
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content w-full max-w-7xl mx-auto flex flex-col">
         {/* Navbar */}
         <div className="w-full navbar bg-gray-950">
           <div className="flex-none lg:hidden">
@@ -45,7 +45,9 @@ const Navbar = ({ children }: { children: ReactElement }) => {
           </div>
         </div>
         {/* Page content here */}
-        {children}
+        <div className="px-5">
+          {children}
+        </div>
       </div>
       <div className="drawer-side">
         <label
