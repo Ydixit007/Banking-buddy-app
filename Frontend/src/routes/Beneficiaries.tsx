@@ -1,19 +1,18 @@
-import Navbar from "@/components/Navbar"
-import { userReducerInitialState } from "@/redux/types/reducer.types";
+import Navbar from "@/components/Navbar";
+import { BeneficiariesResponse, BeneficiaryType, MessageResponse } from "@/types/types";
 import axios from "axios";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Beneficiaries = () => {
-  const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
-  );
+  const [beneficiaries, setBeneficiaries] = useState<BeneficiaryType[]>();
 
   const getBeneficiariesData = async () => {
+    const userData : MessageResponse = JSON.parse(localStorage.getItem("user") || "");
+    const user = userData.user;
     if (user) {
       const res = await axios.get(`http://localhost:3000/api/v1/beneficiaries/all?accountNumber=${user.accountNumber}`);
-      const data = res.data;
-      console.log(data);
+      const data: BeneficiariesResponse = await res.data.beneficiaries;
+      setBeneficiaries(data.beneficiaries);
     }
   }
 
@@ -43,26 +42,16 @@ const Beneficiaries = () => {
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  <tr>
-                    <th>1</th>
-                    <td>Cy Ganderton</td>
-                    <td>Quality Control Specialist</td>
-                    <td>Blue</td>
-                  </tr>
-                  {/* row 2 */}
-                  <tr>
-                    <th>2</th>
-                    <td>Hart Hagerty</td>
-                    <td>Desktop Support Technician</td>
-                    <td>Purple</td>
-                  </tr>
-                  {/* row 3 */}
-                  <tr>
-                    <th>3</th>
-                    <td>Brice Swyre</td>
-                    <td>Tax Accountant</td>
-                    <td>Red</td>
-                  </tr>
+                  {
+                    beneficiaries && beneficiaries.map((beneficiary, index) => <tr key={index}>
+                      <th>{index + 1}</th>
+                      <td>{beneficiary.accountNumber}</td>
+                      <td>{beneficiary.fullName}</td>
+                      <td>{beneficiary.phone}</td>
+                      <td>5000</td>
+                      <td>send</td>
+                    </tr>)
+                  }
                 </tbody>
               </table>
             </div>

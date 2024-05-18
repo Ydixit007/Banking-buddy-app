@@ -30,3 +30,14 @@ export type MessageApiResponse = {
   success: boolean,
   message: string,
 }
+
+export type BeneficiaryType = {
+  fullName: string,
+  accountNumber: number,
+  phone: number,
+}
+
+export type BeneficiariesResponse = {
+  accountNumber: number,
+  beneficiaries: BeneficiaryType[],
+}

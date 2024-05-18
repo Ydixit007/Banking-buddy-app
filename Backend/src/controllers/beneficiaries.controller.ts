@@ -54,7 +54,7 @@ export const getAllUserBeneficiaries = TryCatch(async (req, res, next) => {
     );
   const beneficiaries = await Beneficiaries.findOne({
     accountNumber,
-  });
+  }).populate("beneficiaries", ["fullName", "accountNumber", "phone"]);
   if (!beneficiaries)
     return next(new ErrorHandler("beneficiaries does not exists", 404));
 
