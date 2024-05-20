@@ -14,19 +14,18 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/reducers/userReducer";
 
 function App() {
-  const { user, isLoggedIn} = useSelector(
+  const { user, isLoggedIn } = useSelector(
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
     const data = localStorage.getItem("user");
-    if(data){
+    if (data) {
       const user: MessageResponse = JSON.parse(data);
       dispatch(loginUser(user))
     }
   }, [])
-  
 
   return (
     <div className="dark antialiased">
@@ -35,8 +34,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/dashboard/profile" element={<Profile />} />
-          <Route path="/dashboard/beneficiaries" element={<Beneficiaries />} />
+          <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" replace />} />
+          <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Navigate to="/login" replace />} />
           <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>

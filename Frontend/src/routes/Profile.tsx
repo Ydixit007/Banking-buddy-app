@@ -43,7 +43,7 @@ const Profile = () => {
         <>
           <div className="profile py-4 flex justify-between items-center">
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl">Welcome, {user?.fullName}</h1>
+              <h1 className="text-xl">{user?.fullName}</h1>
               <div className="email text-sm text-gray-400">{user?.email}</div>
               <div className="phone text-sm text-gray-400">{user?.phone}</div>
             </div>
