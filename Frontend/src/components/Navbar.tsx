@@ -5,7 +5,7 @@ const Navbar = ({ children }: { children: ReactElement }) => {
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content w-full max-w-7xl mx-auto flex flex-col">
+      <div className="drawer-content w-full mx-auto flex flex-col">
         {/* Navbar */}
         <div className="w-full navbar bg-gray-950">
           <div className="flex-none lg:hidden">
@@ -29,23 +29,25 @@ const Navbar = ({ children }: { children: ReactElement }) => {
               </svg>
             </label>
           </div>
-          <div className="flex-1 px-2 mx-2 text-bankPrimary font-semibold">
-            Banking buddy
-          </div>
-          <div className="flex-none hidden lg:block">
-            <ul className="menu menu-horizontal gap-2">
-              {/* Navbar menu content here */}
-              <li>
-                <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
-              </li>
-              <li>
-                <Link to={"/dashboard/profile"}>Profile</Link>
-              </li>
-            </ul>
+          <div className="w-full max-w-7xl mx-auto">
+            <div className="flex-1 px-2 mx-2 text-bankPrimary font-semibold">
+              Banking buddy
+            </div>
+            <div className="flex-none hidden lg:block">
+              <ul className="menu menu-horizontal gap-2">
+                {/* Navbar menu content here */}
+                <li>
+                  <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/profile"}>Profile</Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         {/* Page content here */}
-        <div className="px-5">
+        <div className="px-5 md:px-0 w-full max-w-7xl mx-auto">
           {children}
         </div>
       </div>

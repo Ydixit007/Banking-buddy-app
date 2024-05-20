@@ -82,3 +82,20 @@ export const depositMoney = TryCatch(
     });
   }
 );
+
+export const getTransactions = TryCatch(async (req, res, next) => {
+  const { accountNumber } = req.params;
+  if (!accountNumber) return next(new ErrorHandler("Please login first", 400));
+
+  const transactions = await Transaction.find({
+    $or: [{ sender: accountNumber }, { receiver: accountNumber }],
+  })
+    .sort({ createdAt: "desc" })
+    .limit(10);
+  if (!transactions)
+    return next(new ErrorHandler("No transactions found", 404));
+  return res.status(200).json({
+    success: true,
+    transactions,
+  });
+});

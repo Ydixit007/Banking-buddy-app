@@ -27,17 +27,31 @@ export type LoginCreds = {
 };
 
 export type MessageApiResponse = {
-  success: boolean,
-  message: string,
-}
+  success: boolean;
+  message: string;
+};
 
 export type BeneficiaryType = {
-  fullName: string,
-  accountNumber: number,
-  phone: number,
-}
+  fullName: string;
+  accountNumber: number;
+  phone: number;
+};
 
 export type BeneficiariesResponse = {
-  accountNumber: number,
-  beneficiaries: BeneficiaryType[],
-}
+  accountNumber: number;
+  beneficiaries: BeneficiaryType[];
+};
+
+export type Transaction = {
+  _id: string;
+  sender: number;
+  receiver: number;
+  type: string;
+  amount: number;
+  createdAt: Date;
+};
+
+export type TransactionResponse = {
+  success: boolean;
+  transactions: Transaction[];
+};
