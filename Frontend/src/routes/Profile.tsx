@@ -1,11 +1,13 @@
 import Navbar from "@/components/Navbar"
 import { userReducerInitialState } from "@/redux/types/reducer.types";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import DepositMoneyModal from "@/components/modals/DepositMoneyModal";
 import { Transaction, TransactionResponse } from "@/types/types";
 import TransactionCard from "@/components/TransactionCard";
+import { getUserData, storeNewUserData } from "@/utils/user";
+import { loginUser } from "@/redux/reducers/userReducer";
 
 interface ModalType extends HTMLElement {
   showModal: () => {}
@@ -15,10 +17,11 @@ const Profile = () => {
   const { user } = useSelector(
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
+  const dispatch = useDispatch();
   const [transcations, setTranscations] = useState<Transaction[]>([]);
 
   const getTransactions = async () => {
-    if (user) {
+    if (user && transcations.length === 0) {
       const res = await axios.get(`http://localhost:3000/api/v1/transactions/recent/${user.accountNumber}`);
       const transactionsData: TransactionResponse = res.data;
       setTranscations(transactionsData.transactions);
@@ -32,9 +35,22 @@ const Profile = () => {
     }
   }
 
+  const getLatestUserData = async () => {
+    if (user) {
+      const userData = await getUserData(user.accountNumber);
+      dispatch(loginUser(userData));
+      storeNewUserData(userData);
+    }
+  }
+
   useEffect(() => {
     getTransactions();
   }, [user])
+
+  useEffect(() => {
+    getLatestUserData();
+  }, [])
+
 
 
   return (

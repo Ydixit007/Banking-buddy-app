@@ -12,3 +12,13 @@ export const getUserData = async (accountNumber: number) => {
 export const storeNewUserData = (user: MessageResponse) => {
   localStorage.setItem("user", JSON.stringify(user));
 };
+
+export const verifyUserToken = () =>{
+  // verify from local 
+  const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
+  
+  
+  
+  // verify from server
+
+}

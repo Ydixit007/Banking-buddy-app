@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login";
 import SignUpPage from "./routes/SignUpPage";
 import LandingPage from "./routes/LandingPage";
@@ -14,15 +14,16 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/reducers/userReducer";
 
 function App() {
+  const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector(
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
-  const dispatch = useDispatch();
-
+  
   useEffect(() => {
     const data = localStorage.getItem("user");
     if (data) {
       const user: MessageResponse = JSON.parse(data);
+      
       dispatch(loginUser(user))
     }
   }, [])
@@ -32,11 +33,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" replace />} />
-          <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Navigate to="/login" replace />} />
-          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" replace />} />
+          <Route path="/login" element={isLoggedIn ? <Dashboard /> : <Login />} />
+          <Route path="/signup" element={isLoggedIn ? <Dashboard /> : <SignUpPage />} />
+          <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Login />} />
+          <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Login />} />
+          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login />} />
         </Routes>
       </BrowserRouter>
     </div>
