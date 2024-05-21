@@ -12,18 +12,19 @@ import { useEffect } from "react";
 import { MessageResponse } from "./types/types";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/reducers/userReducer";
+import TransferMoney from "./routes/TransferMoney";
 
 function App() {
   const dispatch = useDispatch();
-  const { user, isLoggedIn } = useSelector(
+  const { isLoggedIn } = useSelector(
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
-  
+
   useEffect(() => {
     const data = localStorage.getItem("user");
     if (data) {
       const user: MessageResponse = JSON.parse(data);
-      
+
       dispatch(loginUser(user))
     }
   }, [])
@@ -37,6 +38,7 @@ function App() {
           <Route path="/signup" element={isLoggedIn ? <Dashboard /> : <SignUpPage />} />
           <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Login />} />
           <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Login />} />
+          <Route path="/dashboard/transfer" element={isLoggedIn ? <TransferMoney /> : <Login />} />
           <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login />} />
         </Routes>
       </BrowserRouter>

@@ -7,14 +7,15 @@ const schema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  beneficiaries: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      default: [],
-      required: true,
-    },
-  ],
+  maxLimit: {
+    type: Number,
+    default: 5000,
+  },
+  beneficiary: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 export const Beneficiaries = mongoose.model("beneficiaries", schema);

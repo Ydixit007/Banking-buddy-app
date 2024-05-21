@@ -37,6 +37,9 @@ const Navbar = ({ children }: { children: ReactElement }) => {
               <ul className="menu menu-horizontal gap-2">
                 {/* Navbar menu content here */}
                 <li>
+                  <Link to={"/dashboard/transfer"}>Transfer</Link>
+                </li>
+                <li>
                   <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
                 </li>
                 <li>
@@ -59,6 +62,9 @@ const Navbar = ({ children }: { children: ReactElement }) => {
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-gray-950 gap-2">
           {/* Sidebar content here */}
+          <li>
+            <Link to={"/dashboard/transfer"}>Transfer</Link>
+          </li>
           <li>
             <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
           </li>

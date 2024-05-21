@@ -6,7 +6,7 @@ import { loginUser } from "@/redux/reducers/userReducer";
 
 const DepositMoneyModal = ({ accountNumber }: { accountNumber: number }) => {
     const [Amount, setAmount] = useState<number>(0);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const depositMoney = async () => {
         const res = await axios.post(`http://localhost:3000/api/v1/transactions/deposit`, {

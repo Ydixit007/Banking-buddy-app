@@ -57,4 +57,5 @@ export interface depositMoneyRequestBody{
 export interface addBeneficiariesRequestBody{
   userAccountNumber: number,
   beneficiaryAccountNumber: number, 
+  maxLimit?: number,
 }

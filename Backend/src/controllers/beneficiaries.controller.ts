@@ -11,7 +11,7 @@ export const addBeneficiary = TryCatch(
     res: Response,
     next: NextFunction
   ) => {
-    const { userAccountNumber, beneficiaryAccountNumber } = req.body;
+    const { userAccountNumber, beneficiaryAccountNumber, maxLimit } = req.body;
     if (!userAccountNumber || !beneficiaryAccountNumber)
       return next(
         new ErrorHandler(
@@ -30,15 +30,21 @@ export const addBeneficiary = TryCatch(
       accountNumber: userAccountNumber,
     });
     if (beneficiaries) {
-      beneficiaries.beneficiaries.push(beneficiary._id);
-      await beneficiaries.save();
+      // beneficiaries.beneficiaries.push(beneficiary._id);
+      // await beneficiaries.save();
     } else {
       const userBeneficiaries = [];
       userBeneficiaries.push(beneficiary);
       await Beneficiaries.create({
         accountNumber: userAccountNumber,
-        beneficiaries: userBeneficiaries,
+        beneficiary: beneficiary.id,
+        maxLimit,
       });
+
+      return res.status(201).json({
+        success: true,
+        message: "Beneficiary added."
+      })
     }
   }
 );
