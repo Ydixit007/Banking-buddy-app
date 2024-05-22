@@ -19,32 +19,37 @@ export const addBeneficiary = TryCatch(
           400
         )
       );
-
-    const beneficiary = await User.findOne({
+    const beneficiaryAccount = await User.findOne({
       accountNumber: beneficiaryAccountNumber,
     });
-    if (!beneficiary)
-      return next(new ErrorHandler("beneficiary does not exists", 404));
+    // checking if user exists
+    if (!beneficiaryAccount)
+      return next(new ErrorHandler("User doesn't exists", 400));
 
-    const beneficiaries = await Beneficiaries.findOne({
-      accountNumber: userAccountNumber,
+    const beneficiaryExists = await Beneficiaries.find({
+      $and: [
+        { accountNumber: userAccountNumber },
+        { beneficiary: beneficiaryAccount._id },
+      ],
     });
-    if (beneficiaries) {
-      // beneficiaries.beneficiaries.push(beneficiary._id);
-      // await beneficiaries.save();
-    } else {
-      const userBeneficiaries = [];
-      userBeneficiaries.push(beneficiary);
+    if (!(beneficiaryExists.length > 0)) {
+      // add if it doesn't exists
       await Beneficiaries.create({
         accountNumber: userAccountNumber,
-        beneficiary: beneficiary.id,
+        beneficiary: beneficiaryAccount._id,
         maxLimit,
       });
 
       return res.status(201).json({
         success: true,
-        message: "Beneficiary added."
-      })
+        message: "Beneficiary Created",
+      });
+    } else {
+      // return if already exists
+      return res.status(200).json({
+        success: true,
+        message: "Beneficiary Already exists",
+      });
     }
   }
 );
@@ -58,13 +63,14 @@ export const getAllUserBeneficiaries = TryCatch(async (req, res, next) => {
         400
       )
     );
-  const beneficiaries = await Beneficiaries.findOne({
+  const beneficiaries = await Beneficiaries.find({
     accountNumber,
-  }).populate("beneficiaries", ["fullName", "accountNumber", "phone"]);
+  }).populate("beneficiary", ["fullName", "accountNumber", "phone"]);
+
   if (!beneficiaries)
     return next(new ErrorHandler("beneficiaries does not exists", 404));
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     beneficiaries,
   });

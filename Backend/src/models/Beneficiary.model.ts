@@ -5,7 +5,6 @@ const schema = new mongoose.Schema({
     type: Number,
     ref: "User",
     required: true,
-    unique: true,
   },
   maxLimit: {
     type: Number,
