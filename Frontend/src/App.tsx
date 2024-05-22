@@ -13,6 +13,7 @@ import { MessageResponse } from "./types/types";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/reducers/userReducer";
 import TransferMoney from "./routes/TransferMoney";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
           <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login />} />
         </Routes>
       </BrowserRouter>
+      <Toaster position="bottom-center" />
     </div>
   );
 }

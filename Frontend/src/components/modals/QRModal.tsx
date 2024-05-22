@@ -36,7 +36,7 @@ const QRModal = ({ activateCam, setActivateCam, setAccount }: QrModal) => {
                     </div>
                 </div>
             </div>
-            <form method="dialog" className="modal-backdrop">
+            <form onSubmit={() => { setActivateCam(false) }} method="dialog" className="modal-backdrop">
                 <button>close</button>
             </form>
         </dialog>
