@@ -1,3 +1,4 @@
+import ApplyForLoanModal from "@/components/modals/ApplyForLoanModal";
 import Navbar from "@/components/Navbar"
 import { Loan, LoanResponse, MessageResponse } from "@/types/types";
 import axios from "axios";
@@ -15,6 +16,11 @@ const Loans = () => {
         }
     }
 
+    const handelModal = () => {
+        const modal = document.getElementById("apply_loan") as HTMLDialogElement;
+        modal.showModal();
+    }
+
     useEffect(() => {
         getYourLoans();
     }, [])
@@ -25,7 +31,7 @@ const Loans = () => {
                 <div className="w-full p-4 min-h-[90vh]">
                     <div className="w-full flex justify-between">
                         <h1 className="text-2xl text-gray-300">Your Loans</h1>
-                        <button className="btn btn-sm btn-primary">Apply</button>
+                        <button onClick={handelModal} className="btn btn-sm btn-primary">Apply</button>
                     </div>
                     <div className="mt-4 max-w-screen-2xl mx-auto pt-4">
                         <div className="overflow-x-auto">
@@ -58,6 +64,7 @@ const Loans = () => {
                             </table>
                         </div>
                     </div>
+                    <ApplyForLoanModal />
                 </div>
             </Navbar>
         </div>
