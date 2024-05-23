@@ -39,7 +39,8 @@ export type BeneficiaryType = {
 
 export type BeneficiariesResponse = {
   accountNumber: number;
-  beneficiaries: BeneficiaryType[];
+  maxLimit: number,
+  beneficiary: BeneficiaryType,
 };
 
 export type Transaction = {

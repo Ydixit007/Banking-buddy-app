@@ -1,18 +1,18 @@
 import Navbar from "@/components/Navbar";
-import { BeneficiariesResponse, BeneficiaryType, MessageResponse } from "@/types/types";
+import { BeneficiariesResponse, MessageResponse } from "@/types/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Beneficiaries = () => {
-  const [beneficiaries, setBeneficiaries] = useState<BeneficiaryType[]>();
+  const [beneficiaries, setBeneficiaries] = useState<BeneficiariesResponse[]>();
 
   const getBeneficiariesData = async () => {
-    const userData : MessageResponse = JSON.parse(localStorage.getItem("user") || "");
+    const userData: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
     const user = userData.user;
     if (user) {
       const res = await axios.get(`http://localhost:3000/api/v1/beneficiaries/all?accountNumber=${user.accountNumber}`);
-      const data: BeneficiariesResponse = await res.data.beneficiaries;
-      setBeneficiaries(data.beneficiaries);
+      const data: BeneficiariesResponse[] = await res.data.beneficiaries;
+      setBeneficiaries(data);
     }
   }
 
@@ -43,12 +43,12 @@ const Beneficiaries = () => {
                 <tbody>
                   {/* row 1 */}
                   {
-                    beneficiaries && beneficiaries.map((beneficiary, index) => <tr key={index}>
+                    beneficiaries && beneficiaries.map((data, index) => <tr key={index}>
                       <th>{index + 1}</th>
-                      <td>{beneficiary.accountNumber}</td>
-                      <td>{beneficiary.fullName}</td>
-                      <td>{beneficiary.phone}</td>
-                      <td>5000</td>
+                      <td>{data.beneficiary.accountNumber}</td>
+                      <td>{data.beneficiary.fullName}</td>
+                      <td>{data.beneficiary.phone}</td>
+                      <td>{data.maxLimit}</td>
                       <td>send</td>
                     </tr>)
                   }

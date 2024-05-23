@@ -55,7 +55,7 @@ const TransferMoney = () => {
 
     const TransferMoney = async () => {
         const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
-        if (user && receiverAccount) {
+        if (user && receiverAccount && amount) {
             const userAccount = user.user.accountNumber;
             try {
                 await axios.post("http://localhost:3000/api/v1/transactions/transfer", {
@@ -72,6 +72,8 @@ const TransferMoney = () => {
             } catch (error) {
                 toast.error("Transaction Failed");
             }
+        } else {
+            toast("Enter all the information first");
         }
     }
 
@@ -89,8 +91,8 @@ const TransferMoney = () => {
                         <input value={account || ""} onChange={handelChange} maxLength={10} className="input w-full" type="text" placeholder="Search Account Number" />
                     </div>
                     {receiverAccount && <div className="receiverDetails flex flex-col pt-4">
-                        <div className="">To: {receiverAccount.user.fullName}</div>
-                        <div className="">Acc: {receiverAccount.user.accountNumber}</div>
+                        <div className="text-lg font-medium">To: {receiverAccount.user.fullName}</div>
+                        <div className="text-gray-400">Acc: {receiverAccount.user.accountNumber}</div>
                         <input className="input w-full my-4" value={amount || ""} onChange={handelAmountChange} type="text" placeholder="Enter the amount for the transfer" />
                     </div>}
                     <div className="buttons mt-4 flex gap-4 ml-auto">
