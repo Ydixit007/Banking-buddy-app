@@ -9,11 +9,16 @@ import Beneficiaries from "./routes/Beneficiaries";
 import { useSelector } from "react-redux";
 import { userReducerInitialState } from "./redux/types/reducer.types";
 import { useEffect } from "react";
-import { MessageResponse } from "./types/types";
+import { MessageApiResponse, MessageResponse } from "./types/types";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/reducers/userReducer";
 import TransferMoney from "./routes/TransferMoney";
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import axios, { AxiosError } from "axios";
+
+interface loginRes {
+  success: boolean
+}
 
 function App() {
   const dispatch = useDispatch();
@@ -21,13 +26,34 @@ function App() {
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
 
-  useEffect(() => {
-    const data = localStorage.getItem("user");
-    if (data) {
-      const user: MessageResponse = JSON.parse(data);
-
-      dispatch(loginUser(user))
+  const verifyLogin = async () => {
+    const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
+    if (user) {
+      try {
+        const res = await axios.post("http://localhost:3000/api/v1/user/verify", {
+          token: user.token
+        }, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const login: loginRes = res.data;
+        if (login.success) {
+          dispatch(loginUser(user));
+        }
+      } catch (err) {
+        const message = err as AxiosError;
+        if (message.response) {
+          const response: MessageApiResponse = message.response.data as MessageApiResponse;
+          localStorage.removeItem("user");
+          toast.error(response.message);
+        }
+      }
     }
+  }
+
+  useEffect(() => {
+    verifyLogin();
   }, [])
 
   return (

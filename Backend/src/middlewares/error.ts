@@ -12,7 +12,9 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (
   err.message ||= "Internal server error";
   err.statusCode ||= 500;
 
-  if(err.name === "CastError") err.message = "Invalid Id"
+  if (err.name === "CastError") err.message = "Invalid Id";
+  if (err.message === "jwt expired" || err.message === "jwt must be provided")
+    err.message = "Session Expired";
 
   // Send the error response
   return res.status(err.statusCode).json({

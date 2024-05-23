@@ -1,4 +1,4 @@
-import { MessageResponse } from "@/types/types";
+import { MessageResponse, User } from "@/types/types";
 import axios from "axios";
 
 export const getUserData = async (accountNumber: number) => {
@@ -9,16 +9,10 @@ export const getUserData = async (accountNumber: number) => {
   return user;
 };
 
-export const storeNewUserData = (user: MessageResponse) => {
-  localStorage.setItem("user", JSON.stringify(user));
+export const storeNewUserData = (user: User) => {
+  const newUser: MessageResponse = JSON.parse(
+    localStorage.getItem("user") || ""
+  );
+  newUser.user = user;
+  localStorage.setItem("user", JSON.stringify(newUser));
 };
-
-export const verifyUserToken = () =>{
-  // verify from local 
-  const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
-  
-  
-  
-  // verify from server
-
-}

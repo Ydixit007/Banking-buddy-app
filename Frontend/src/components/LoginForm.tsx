@@ -19,6 +19,7 @@ import { useLoginMutation } from "@/redux/api/user";
 import { loginUser } from "@/redux/reducers/userReducer";
 import { MessageApiResponse } from "@/types/types";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
 
@@ -47,13 +48,14 @@ const LoginForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const res = await login({ email: values.email, password: values.password })
     if (res.data) {
+      toast.success("Login successful")
       localStorage.setItem("user", JSON.stringify(res.data));
       dispatch(loginUser(res.data));
       navigate("/dashboard");
     } else {
       const error = res.error as FetchBaseQueryError;
       const message = (error.data as MessageApiResponse).message;
-      console.log(message);
+      toast.error(message);
     }
   }
 

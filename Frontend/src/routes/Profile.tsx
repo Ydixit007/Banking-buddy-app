@@ -39,7 +39,7 @@ const Profile = () => {
     if (user) {
       const userData = await getUserData(user.accountNumber);
       dispatch(loginUser(userData));
-      storeNewUserData(userData);
+      storeNewUserData(userData.user);
     }
   }
 

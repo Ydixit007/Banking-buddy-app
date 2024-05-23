@@ -82,7 +82,7 @@ export const loginUser = TryCatch(
     if (passwordCorrect) {
       user.password = "";
       const key = process.env.JWT_SECRET || "";
-      const token = jwt.sign({ email: email }, key, { expiresIn: "10s" });
+      const token = jwt.sign({ email: email }, key, { expiresIn: "300s" });
       res.status(200).json({
         success: true,
         user,
@@ -101,7 +101,6 @@ export const verifyUserToken = TryCatch(
   async (req: Request, res: Response, next: NextFunction) => {
     const { token } = req.body;
     const user = verifyJwtToken(token);
-
     res.status(200).json({
       success: true,
       user,
