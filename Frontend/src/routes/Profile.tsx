@@ -8,6 +8,7 @@ import { Transaction, TransactionResponse } from "@/types/types";
 import TransactionCard from "@/components/TransactionCard";
 import { getUserData, storeNewUserData } from "@/utils/user";
 import { loginUser } from "@/redux/reducers/userReducer";
+import ShowQRModal from "@/components/modals/ShowQRModal";
 
 interface ModalType extends HTMLElement {
   showModal: () => {}
@@ -43,6 +44,11 @@ const Profile = () => {
     }
   }
 
+  const ShowQR = () => {
+    const modal = document.getElementById("show_QR") as HTMLDialogElement;
+    modal.showModal();
+  }
+
   useEffect(() => {
     getTransactions();
   }, [user])
@@ -51,17 +57,16 @@ const Profile = () => {
     getLatestUserData();
   }, [])
 
-
-
   return (
     <div className="w-full min-h-screen text-primary">
       <Navbar>
         <div className="w-full md:px-4">
           <div className="profile py-4 flex justify-between items-center">
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl">{user?.fullName}</h1>
+              <h1 className="text-xl">{user?.fullName} <span><button className="btn btn-xs">Edit</button></span></h1>
               <div className="email text-sm text-gray-400">{user?.email}</div>
               <div className="phone text-sm text-gray-400">{user?.phone}</div>
+              <button onClick={ShowQR} className="btn btn-sm">Show QR</button>
             </div>
             <div className="flex flex-col items-end gap-1">
               <div className="balance text-xl font-semibold">Bal: {user?.accountBalance}</div>
@@ -78,6 +83,7 @@ const Profile = () => {
             </div>
           </div>
           <DepositMoneyModal accountNumber={user?.accountNumber || 0} />
+          {user && <ShowQRModal accountNumber={user.accountNumber} />}
         </div>
       </Navbar>
     </div>
