@@ -35,12 +35,13 @@ export type BeneficiaryType = {
   fullName: string;
   accountNumber: number;
   phone: number;
+  maxLimit: number;
 };
 
 export type BeneficiariesResponse = {
   accountNumber: number;
-  maxLimit: number,
-  beneficiary: BeneficiaryType,
+  maxLimit: number;
+  beneficiary: BeneficiaryType;
 };
 
 export type Transaction = {

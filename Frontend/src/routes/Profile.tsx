@@ -56,7 +56,7 @@ const Profile = () => {
   return (
     <div className="w-full min-h-screen text-primary">
       <Navbar>
-        <>
+        <div className="w-full md:px-4">
           <div className="profile py-4 flex justify-between items-center">
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">{user?.fullName}</h1>
@@ -78,7 +78,7 @@ const Profile = () => {
             </div>
           </div>
           <DepositMoneyModal accountNumber={user?.accountNumber || 0} />
-        </>
+        </div>
       </Navbar>
     </div>
   )

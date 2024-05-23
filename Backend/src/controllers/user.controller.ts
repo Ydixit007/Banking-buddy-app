@@ -115,7 +115,7 @@ export const getUserFromDatabase = TryCatch(async (req, res, next) => {
     const user = await User.findOne({ accountNumber: id });
     if (!user)
       return next(
-        new ErrorHandler("Incorrect / account number does not exists", 400)
+        new ErrorHandler("Account number does not exists", 400)
       );
 
     res.status(200).json({
