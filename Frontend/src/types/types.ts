@@ -57,3 +57,16 @@ export type TransactionResponse = {
   success: boolean;
   transactions: Transaction[];
 };
+
+export type Loan = {
+  accountNumber: number;
+  status: string;
+  loanAmount: number;
+  dueDate: Date;
+  appliedOn: Date;
+};
+
+export type LoanResponse = {
+  success: boolean;
+  loans: [Loan];
+};

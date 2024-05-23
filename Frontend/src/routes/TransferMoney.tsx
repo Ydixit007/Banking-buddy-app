@@ -86,7 +86,7 @@ const TransferMoney = () => {
         <div className="min-h-screen w-full flex text-primary">
             <Navbar>
                 <div className="p-4 flex flex-col">
-                    <h1 className="text-2xl font-medium mb-4">Transfer Money</h1>
+                    <h1 className="text-2xl text-gray-300 mb-4">Transfer Money</h1>
                     <div className="w-full">
                         <input value={account || ""} onChange={handelChange} maxLength={10} className="input w-full" type="text" placeholder="Search Account Number" />
                     </div>

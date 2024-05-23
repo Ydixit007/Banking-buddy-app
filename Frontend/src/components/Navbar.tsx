@@ -43,6 +43,9 @@ const Navbar = ({ children }: { children: ReactElement }) => {
                   <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
                 </li>
                 <li>
+                  <Link to={"/dashboard/loans"}>Loans</Link>
+                </li>
+                <li>
                   <Link to={"/dashboard/profile"}>Profile</Link>
                 </li>
               </ul>
@@ -67,6 +70,9 @@ const Navbar = ({ children }: { children: ReactElement }) => {
           </li>
           <li>
             <Link to={"/dashboard/beneficiaries"}>Beneficiaries</Link>
+          </li>
+          <li>
+            <Link to={"/dashboard/loans"}>Loans</Link>
           </li>
           <li>
             <Link to={"/dashboard/profile"}>Profile</Link>

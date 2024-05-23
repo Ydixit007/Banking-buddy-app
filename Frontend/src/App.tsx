@@ -15,6 +15,7 @@ import { loginUser } from "./redux/reducers/userReducer";
 import TransferMoney from "./routes/TransferMoney";
 import toast, { Toaster } from 'react-hot-toast';
 import axios, { AxiosError } from "axios";
+import Loans from "./routes/Loans";
 
 interface loginRes {
   success: boolean
@@ -66,6 +67,7 @@ function App() {
           <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Login />} />
           <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Login />} />
           <Route path="/dashboard/transfer" element={isLoggedIn ? <TransferMoney /> : <Login />} />
+          <Route path="/dashboard/loans" element={isLoggedIn ? <Loans /> : <Login />} />
           <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login />} />
         </Routes>
       </BrowserRouter>
