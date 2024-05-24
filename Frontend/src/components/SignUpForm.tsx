@@ -68,7 +68,7 @@ const SignUpForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="text-primary gap-2 min-w-[24rem] p-4 bg-slate-900 rounded-lg flex flex-col"
+        className="text-primary gap-2 min-w-[24rem] max-sm:min-w-[22rem] p-4 bg-slate-900 rounded-lg flex flex-col"
       >
         <FormField
           control={form.control}
