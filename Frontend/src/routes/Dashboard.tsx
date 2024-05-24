@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const Dashboard = ({ user }: { user: User | null }) => {
   const [transcations, setTranscations] = useState<Transaction[]>([]);
-  const [Loans, setLoans] = useState<Loan[]>();
+  const [Loans, setLoans] = useState<Loan[]>([]);
 
 
   const ShowQR = () => {
@@ -40,7 +40,7 @@ const Dashboard = ({ user }: { user: User | null }) => {
   return (
     user ? <div className="min-h-[100dvh] w-full flex text-primary">
       <Navbar>
-        <div className="dashboard-content min-h-[90vh] w-full p-4 flex flex-col gap-2">
+        <div className="dashboard-content min-h-[90vh] w-full p-4 flex flex-col justify-between gap-2">
           <div className="w-full flex justify-between items-center">
             <h1 className="text-xl font-medium">Welcome, {user.fullName}</h1>
             <h3 className="text-xl font-semibold">Rs. {user.accountBalance}</h3>
@@ -49,17 +49,17 @@ const Dashboard = ({ user }: { user: User | null }) => {
             <div className="text-gray-300">Acc: {user.accountNumber}</div>
             <button onClick={ShowQR} className="btn btn-sm">Show QR</button>
           </div>
-          <div className="flex-1 max-h-[35vh] w-full mt-2 flex flex-col">
+          <div className="flex-1 max-h-[35vh] w-full py-3 flex flex-col">
             <h6 className="text-gray-400">Recent Transaction</h6>
-            <div className="overflow-auto mt-2 flex flex-col gap-4">
-              {transcations.length >= 1 && transcations.map((trans) => <TransactionCard key={trans._id} amount={trans.amount} date={trans.createdAt} id={trans._id} receiver={trans.receiver} sender={trans.sender} type={trans.type} myAccountNumber={user?.accountNumber || 0} />
-              )}
+            <div className="overflow-auto mt-2 flex flex-col gap-4 pr-2">
+              {transcations.length >= 1 ? transcations.map((trans) => <TransactionCard key={trans._id} amount={trans.amount} date={trans.createdAt} id={trans._id} receiver={trans.receiver} sender={trans.sender} type={trans.type} myAccountNumber={user?.accountNumber || 0} />
+              ) : <div className="flex justify-center items-center h-[35vh]">No transactions</div>} 
             </div>
           </div>
-          <div className="flex-1 max-h-[35vh] w-full mt-2 flex flex-col">
+          <div className="flex-1 max-h-[35vh] w-full py-2 flex flex-col">
             <h6 className="text-gray-400">Your Loans</h6>
-            <div className="overflow-x-auto">
-              <table className="table">
+            <div className="overflow-x-auto pr-2">
+              {Loans.length > 0 ? <table className="table">
                 {/* head */}
                 <thead>
                   <tr>
@@ -85,7 +85,7 @@ const Dashboard = ({ user }: { user: User | null }) => {
                     })
                   }
                 </tbody>
-              </table>
+              </table> : <div className="w-full h-full flex h-[35vh] justify-center items-center">No loans</div>}
             </div>
           </div>
           <ShowQRModal accountNumber={user.accountNumber} />

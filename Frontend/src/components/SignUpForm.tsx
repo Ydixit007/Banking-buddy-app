@@ -12,17 +12,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LinkButton from "./LinkButton";
-
-/* 
-    Form Fields
-    1. full name
-    2. Email
-    3. phone number
-    4. date of birth
-    5. password
-*/
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
+import { MessageApiResponse } from "@/types/types";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
+  const today = new Date();
+  const minAge = 18;
   const formSchema = z.object({
     fullName: z.string().min(2, {
       message: "incorrect Name",
@@ -30,6 +28,18 @@ const SignUpForm = () => {
     email: z.string().email({
       message: "incorrect Email",
     }),
+    dob: z
+      .string()
+      .transform((val) => new Date(val))
+      .refine((val) => val <= today, {
+        message: "Date of birth must be in the past",
+      }).refine(
+        (val) =>
+          today.getFullYear() - val.getFullYear() >= minAge,
+        {
+          message: `You must be at least ${minAge} years old`,
+        }
+      ),
     phone: z
       .string()
       .min(10, {
@@ -46,6 +56,7 @@ const SignUpForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
+      dob: new Date(),
       email: "",
       phone: "",
       password: "",
@@ -54,14 +65,21 @@ const SignUpForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    console.log(await response.json());
+    try {
+      await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/create`, values, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      toast.success("User created, Please login");
+      navigate("/login");
+    } catch (err) {
+      const message = err as AxiosError;
+      if (message.response) {
+        const response: MessageApiResponse = message.response.data as MessageApiResponse;
+        toast.error(response.message);
+      }
+    }
   }
 
   return (
@@ -104,6 +122,23 @@ const SignUpForm = () => {
               <FormLabel className="text-primary">Phone number</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
+              </FormControl>
+              <FormMessage className="text-xs font-light text-red-400" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dob"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-primary">Date of birth</FormLabel>
+              <FormControl>
+                <Input
+                  type="date"
+                  placeholder=""
+                  {...field}
+                />
               </FormControl>
               <FormMessage className="text-xs font-light text-red-400" />
             </FormItem>

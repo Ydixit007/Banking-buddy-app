@@ -17,18 +17,15 @@ export const createUser = TryCatch(
     res: Response,
     next: NextFunction
   ) => {
-    const { fullName, address, dob, email, gender, password, phone, photo } =
+    const { fullName, address, dob, email, password, phone } =
       req.body;
 
     if (
       !fullName ||
-      !address ||
       !dob ||
       !email ||
-      !gender ||
       !password ||
-      !phone ||
-      !photo
+      !phone
     )
       return next(
         new ErrorHandler(

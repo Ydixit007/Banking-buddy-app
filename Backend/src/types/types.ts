@@ -11,9 +11,8 @@ export interface createUserRequestBody {
   email: string;
   password: string;
   phone: number;
-  address: string;
-  photo: string;
-  gender: string;
+  address?: string;
+  gender?: string;
   dob: Date;
 }
 
