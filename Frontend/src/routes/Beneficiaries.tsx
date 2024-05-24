@@ -48,7 +48,7 @@ const Beneficiaries = () => {
   return (
     <div className="min-h-[100dvh] w-full flex text-primary">
       <Navbar>
-        <div className="dashboard-content px-6 min-h-[90vh]">
+        <div className="dashboard-content px-6 max-h-[95vh]">
           <div className="flex justify-between items-center">
             <h1 className="py-4 text-2xl text-gray-300">Your Beneficiaries</h1>
             <button className="btn btn-primary btn-sm" onClick={handelAddBeneficiary}>Add</button>

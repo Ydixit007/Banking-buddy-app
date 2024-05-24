@@ -28,7 +28,7 @@ const Loans = () => {
     return (
         <div className="min-h-[100dvh] w-full text-primary">
             <Navbar>
-                <div className="w-full p-4 min-h-[90vh]">
+                <div className="w-full p-4 max-h-[95vh]">
                     <div className="w-full flex justify-between">
                         <h1 className="text-2xl text-gray-300">Your Loans</h1>
                         <button onClick={handelModal} className="btn btn-sm btn-primary">Apply</button>

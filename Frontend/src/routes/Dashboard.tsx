@@ -40,7 +40,7 @@ const Dashboard = ({ user }: { user: User | null }) => {
   return (
     user ? <div className="min-h-[100dvh] w-full flex text-primary">
       <Navbar>
-        <div className="dashboard-content min-h-[90vh] w-full p-4 flex flex-col justify-between gap-2">
+        <div className="dashboard-content max-h-[95vh] w-full p-4 flex flex-col justify-between gap-2">
           <div className="w-full flex justify-between items-center">
             <h1 className="text-xl font-medium">Welcome, {user.fullName}</h1>
             <h3 className="text-xl font-semibold">Rs. {user.accountBalance}</h3>
@@ -85,7 +85,7 @@ const Dashboard = ({ user }: { user: User | null }) => {
                     })
                   }
                 </tbody>
-              </table> : <div className="w-full h-full flex h-[35vh] justify-center items-center">No loans</div>}
+              </table> : <div className="w-full flex h-[35vh] justify-center items-center">No loans</div>}
             </div>
           </div>
           <ShowQRModal accountNumber={user.accountNumber} />
