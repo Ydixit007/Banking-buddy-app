@@ -31,7 +31,7 @@ const Navbar = ({ children }: { children: ReactElement }) => {
           </div>
           <div className="w-full max-w-7xl mx-auto">
             <div className="flex-1 px-2 mx-2 text-bankPrimary font-semibold">
-              Banking buddy
+              <Link to="/dashboard">Banking buddy</Link>
             </div>
             <div className="flex-none hidden lg:block">
               <ul className="menu menu-horizontal gap-2">

@@ -23,7 +23,7 @@ interface loginRes {
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector(
+  const { user, isLoggedIn } = useSelector(
     (state: { userReducer: userReducerInitialState }) => state.userReducer
   );
 
@@ -62,13 +62,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={isLoggedIn ? <Dashboard /> : <Login />} />
-          <Route path="/signup" element={isLoggedIn ? <Dashboard /> : <SignUpPage />} />
+          <Route path="/login" element={isLoggedIn ? <Dashboard user={user} /> : <Login />} />
+          <Route path="/signup" element={isLoggedIn ? <Dashboard user={user} /> : <SignUpPage />} />
           <Route path="/dashboard/profile" element={isLoggedIn ? <Profile /> : <Login />} />
           <Route path="/dashboard/beneficiaries" element={isLoggedIn ? <Beneficiaries /> : <Login />} />
           <Route path="/dashboard/transfer" element={isLoggedIn ? <TransferMoney /> : <Login />} />
           <Route path="/dashboard/loans" element={isLoggedIn ? <Loans /> : <Login />} />
-          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login />} />
+          <Route path="/dashboard" element={isLoggedIn ? <Dashboard user={user} /> : <Login />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-center" />
