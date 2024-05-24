@@ -9,7 +9,7 @@ const DepositMoneyModal = ({ accountNumber }: { accountNumber: number }) => {
     const dispatch = useDispatch();
 
     const depositMoney = async () => {
-        await axios.post(`http://localhost:3000/api/v1/transactions/deposit`, {
+        await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/transactions/deposit`, {
             accountNumber: accountNumber,
             amount: Amount,
         }, {

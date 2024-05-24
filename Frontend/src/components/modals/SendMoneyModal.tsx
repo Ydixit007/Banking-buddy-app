@@ -15,7 +15,7 @@ const SendMoneyModal = ({ beneficary, maxLimit }: { beneficary?: BeneficiaryType
         }
         if (user && beneficary && amount) {
             try {
-                await axios.post("http://localhost:3000/api/v1/transactions/transfer", {
+                await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/transactions/transfer`, {
                     sender: user.accountNumber,
                     receiver: beneficary.accountNumber,
                     amount,

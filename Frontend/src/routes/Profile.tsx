@@ -24,7 +24,7 @@ const Profile = () => {
 
   const getTransactions = async () => {
     if (user && transcations.length === 0) {
-      const res = await axios.get(`http://localhost:3000/api/v1/transactions/recent/${user.accountNumber}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/transactions/recent/${user.accountNumber}`);
       const transactionsData: TransactionResponse = res.data;
       setTranscations(transactionsData.transactions);
     }

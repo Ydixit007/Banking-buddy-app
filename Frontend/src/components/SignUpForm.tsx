@@ -54,7 +54,7 @@ const SignUpForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await fetch("http://localhost:5000/api/register", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

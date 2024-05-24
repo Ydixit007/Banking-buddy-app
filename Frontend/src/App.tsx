@@ -31,7 +31,7 @@ function App() {
     const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
     if (user) {
       try {
-        const res = await axios.post("http://localhost:3000/api/v1/user/verify", {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/verify`, {
           token: user.token
         }, {
           headers: {

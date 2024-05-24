@@ -18,7 +18,7 @@ const Beneficiaries = () => {
     const userData: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
     const user = userData.user;
     if (user) {
-      const res = await axios.get(`http://localhost:3000/api/v1/beneficiaries/all?accountNumber=${user.accountNumber}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/beneficiaries/all?accountNumber=${user.accountNumber}`);
       const data: BeneficiariesResponse[] = await res.data.beneficiaries;
       setBeneficiaries(data);
     }

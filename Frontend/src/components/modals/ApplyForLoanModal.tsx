@@ -17,7 +17,7 @@ const ApplyForLoanModal = () => {
         const userData: MessageResponse = JSON.parse(localStorage.getItem("user") || "")
         if (amount && dueDate && userData) {
             try {
-                await axios.post(`http://localhost:3000/api/v1/loan/apply`, {
+                await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/loan/apply`, {
                     accountNumber: userData.user.accountNumber,
                     loanAmount: amount,
                     dueDate: dueDate,

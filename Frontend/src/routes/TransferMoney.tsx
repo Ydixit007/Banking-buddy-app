@@ -58,7 +58,7 @@ const TransferMoney = () => {
         if (user && receiverAccount && amount) {
             const userAccount = user.user.accountNumber;
             try {
-                await axios.post("http://localhost:3000/api/v1/transactions/transfer", {
+                await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/transactions/transfer`, {
                     sender: userAccount,
                     receiver: receiverAccount.user.accountNumber,
                     amount: amount,

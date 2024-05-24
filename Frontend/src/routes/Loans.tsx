@@ -10,7 +10,7 @@ const Loans = () => {
     const getYourLoans = async () => {
         const userData: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
         if (userData) {
-            const res = await axios.get(`http://localhost:3000/api/v1/loan/all/${userData.user.accountNumber}`);
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/loan/all/${userData.user.accountNumber}`);
             const data: LoanResponse = res.data;
             setLoans(data.loans);
         }

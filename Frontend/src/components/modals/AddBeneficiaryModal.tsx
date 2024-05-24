@@ -43,7 +43,7 @@ const AddBeneficiaryModal = ({ getBeneficiariesData }: { getBeneficiariesData: (
             const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
             if (user) {
                 try {
-                    const res = await axios.post("http://localhost:3000/api/v1/beneficiaries/add", {
+                    const res = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/beneficiaries/add`, {
                         userAccountNumber: user.user.accountNumber,
                         beneficiaryAccountNumber: AccountNumber,
                         maxLimit,

@@ -26,7 +26,7 @@ const EditProfileModal = ({ fullNameProp, addressProp, phoneProp, accountNumber,
 
     const EditProfile = async () => {
         try {
-            await axios.post("http://localhost:3000/api/v1/user/update", {
+            await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/update`, {
                 fullName: fullName,
                 address: address,
                 phone: phone,
