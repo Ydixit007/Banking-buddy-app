@@ -26,7 +26,7 @@ const Loans = () => {
     }, [])
 
     return (
-        <div className="w-full min-h-screen text-primary">
+        <div className="min-h-[100dvh] w-full text-primary">
             <Navbar>
                 <div className="w-full p-4 min-h-[90vh]">
                     <div className="w-full flex justify-between">

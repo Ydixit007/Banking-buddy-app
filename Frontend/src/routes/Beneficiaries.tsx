@@ -46,7 +46,7 @@ const Beneficiaries = () => {
 
 
   return (
-    <div className="min-h-screen w-full flex text-primary">
+    <div className="min-h-[100dvh] w-full flex text-primary">
       <Navbar>
         <div className="dashboard-content px-6 min-h-[90vh]">
           <div className="flex justify-between items-center">

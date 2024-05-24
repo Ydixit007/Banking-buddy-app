@@ -64,7 +64,7 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className="w-full min-h-screen text-primary">
+    <div className="min-h-[100dvh] w-full text-primary">
       <Navbar>
         <div className="w-full md:px-4">
           <div className="profile py-4 flex justify-between items-center">

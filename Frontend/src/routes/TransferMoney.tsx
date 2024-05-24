@@ -83,7 +83,7 @@ const TransferMoney = () => {
 
 
     return (
-        <div className="min-h-screen w-full flex text-primary">
+        <div className="min-h-[100dvh] w-full flex text-primary">
             <Navbar>
                 <div className="p-4 flex flex-col">
                     <h1 className="text-2xl text-gray-300 mb-4">Transfer Money</h1>

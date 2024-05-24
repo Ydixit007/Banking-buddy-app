@@ -4,7 +4,7 @@ import LinkButton from '@/components/LinkButton';
 
 const LandingPage = () => {
   return (
-    <div className='h-screen w-full bg-background flex justify-center items-center flex-col gap-4 text-primary relative'>
+    <div className='min-h-[100dvh] w-full bg-background flex justify-center items-center flex-col gap-4 text-primary relative'>
     <motion.img initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{
