@@ -4,6 +4,7 @@ import {
   getAllUsers,
   getUserFromDatabase,
   loginUser,
+  updateUser,
   verifyUserToken,
 } from "../controllers/user.controller";
 import { adminOnly } from "../middlewares/auth";
@@ -18,6 +19,9 @@ userRoute.post("/login", loginUser);
 
 // verify login
 userRoute.post("/verify", verifyUserToken);
+
+// update user
+userRoute.post("/update", updateUser);
 
 // get user (The id is account number)
 userRoute.get("/getone/:id", getUserFromDatabase);
