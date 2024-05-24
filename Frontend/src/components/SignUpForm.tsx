@@ -130,19 +130,18 @@ const SignUpForm = () => {
         <FormField
           control={form.control}
           name="dob"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-primary">Date of birth</FormLabel>
-              <FormControl>
-                <Input
-                  type="date"
-                  placeholder=""
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-xs font-light text-red-400" />
-            </FormItem>
-          )}
+          render={({ field }) => (<FormItem>
+            <FormLabel className="text-primary">Date of birth</FormLabel>
+            <FormControl>
+              <Input
+                type="date"
+                placeholder=""
+                {...field}
+                value={String(field.value)}
+              />
+            </FormControl>
+            <FormMessage className="text-xs font-light text-red-400" />
+          </FormItem>)}
         />
         <FormField
           control={form.control}
