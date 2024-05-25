@@ -99,3 +99,21 @@ export const getTransactions = TryCatch(async (req, res, next) => {
     transactions,
   });
 });
+
+export const getAllTransactions = TryCatch(async (req, res, next) => {
+  const currentPage = Number(req.query.page) || 1;
+  const perPage = 10;
+  const page = Math.max(0, currentPage);
+  const transactions = await Transaction.find({})
+    .sort({ createdAt: "desc" })
+    .limit(perPage)
+    .skip(perPage * page);
+  const total = await Transaction.countDocuments();
+  if (!transactions || !total)
+    return next(new ErrorHandler("No transactions found", 404));
+  return res.status(200).json({
+    success: true,
+    transactions,
+    total
+  });
+});
