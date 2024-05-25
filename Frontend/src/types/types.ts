@@ -70,3 +70,8 @@ export type LoanResponse = {
   success: boolean;
   loans: [Loan];
 };
+
+export interface CustomerApiResponse {
+  success: boolean;
+  users: User[];
+}

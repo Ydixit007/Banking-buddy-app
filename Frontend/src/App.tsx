@@ -16,6 +16,10 @@ import TransferMoney from "./routes/TransferMoney";
 import toast, { Toaster } from 'react-hot-toast';
 import axios, { AxiosError } from "axios";
 import Loans from "./routes/Loans";
+import AdminDashboard from "./routes/admin/AdminDashboard";
+import Admin404 from "./routes/admin/Admin404";
+import AdminLoans from "./routes/admin/AdminLoans";
+import AdminTransacions from "./routes/admin/AdminTransacions";
 
 interface loginRes {
   success: boolean
@@ -28,7 +32,16 @@ function App() {
   );
 
   const verifyLogin = async () => {
-    const user: MessageResponse = JSON.parse(localStorage.getItem("user") || "");
+    const userString = localStorage.getItem("user");
+    let user: MessageResponse | null = null;
+
+    if (userString) {
+      try {
+        user = JSON.parse(userString);
+      } catch (error) {
+        console.error("Error parsing user data from localStorage:", error);
+      }
+    }
     if (user) {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/user/verify`, {
@@ -69,6 +82,10 @@ function App() {
           <Route path="/dashboard/transfer" element={isLoggedIn ? <TransferMoney /> : <Login />} />
           <Route path="/dashboard/loans" element={isLoggedIn ? <Loans /> : <Login />} />
           <Route path="/dashboard" element={isLoggedIn ? <Dashboard user={user} /> : <Login />} />
+          {/* admin routes */}
+          <Route path="/admin" element={user?.role === "admin" ? <AdminDashboard /> : <Admin404 />} />
+          <Route path="/admin/loans" element={user?.role === "admin" ? <AdminLoans /> : <Admin404 />} />
+          <Route path="/admin/transactions" element={user?.role === "admin" ? <AdminTransacions /> : <Admin404 />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-center" />
