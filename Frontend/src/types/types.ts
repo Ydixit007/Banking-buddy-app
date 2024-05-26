@@ -56,6 +56,7 @@ export type Transaction = {
 export type TransactionResponse = {
   success: boolean;
   transactions: Transaction[];
+  total?: number,
 };
 
 export type Loan = {
