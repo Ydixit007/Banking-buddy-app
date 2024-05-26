@@ -1,11 +1,38 @@
 import AdminNavbar from "@/components/admin/AdminNavbar"
-import { LoanResponse, MessageResponse, Loan } from "@/types/types";
-import axios from "axios";
+import { LoanResponse, MessageResponse, Loan, MessageApiResponse } from "@/types/types";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AdminLoans = () => {
 
     const [loans, setLoans] = useState<Loan[]>([])
+
+    const updateLoan = async (status: string, id: string) => {
+        const userString = localStorage.getItem("user");
+        let admin: MessageResponse | null = null;
+        if (userString) {
+            try {
+                admin = JSON.parse(userString);
+            } catch (error) {
+                console.error("Please login first");
+            }
+        }
+        if (admin) {
+            try {
+                const res = await axios.put(`${import.meta.env.VITE_BACKEND_BASE_URL}/loan/${id}?accountNumber=${admin.user.accountNumber}&status=${status}`);
+                const data: MessageApiResponse = res.data;
+                toast.success(data.message);
+                getLoans();
+            } catch (err) {
+                const message = err as AxiosError;
+                if (message.response) {
+                    const response: MessageApiResponse = message.response.data as MessageApiResponse;
+                    toast.error(response.message);
+                }
+            }
+        }
+    }
 
     const getLoans = async () => {
         const userString = localStorage.getItem("user");
@@ -62,8 +89,10 @@ const AdminLoans = () => {
                                         <td>{loan.loanAmount}</td>
                                         <td>{loan.status}</td>
                                         {
-                                            loan.status === "applied" && <><td><button className="btn btn-sm">Approve</button></td>
-                                                <td><button className="btn btn-sm">Reject</button></td></>
+                                            loan.status === "applied" && <>
+                                                <td><button onClick={() => updateLoan("graunted", loan._id)} className="btn btn-sm">Approve</button></td>
+                                                <td><button onClick={() => updateLoan("declined", loan._id)} className="btn btn-sm">Reject</button></td>
+                                            </>
                                         }
                                     </tr>
                                 })

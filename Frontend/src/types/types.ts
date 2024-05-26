@@ -65,6 +65,7 @@ export type Loan = {
   loanAmount: number;
   dueDate: Date;
   appliedOn: Date;
+  _id: string
 };
 
 export type LoanResponse = {

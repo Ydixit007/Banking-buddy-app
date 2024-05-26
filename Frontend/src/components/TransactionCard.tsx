@@ -41,7 +41,7 @@ const TransactionCard = ({ date, id, amount, type, receiver, sender, myAccountNu
                 {type === "transfer" && <div className="to"> {User?.user.fullName}</div>}
                 <div className="id text-xs text-gray-400">{id}</div>
             </div>
-            <div className={`${receiver === myAccountNumber ? "text-green-400" : "text-red-400"}`}>
+            <div className={`${receiver === myAccountNumber ? "text-green-400" : "text-red-400"} flex items-end flex-col`}>
                 <div className="amount font-semibold">Rs. {amount}</div>
                 <div className="type text-gray-400">{type}</div>
             </div>
