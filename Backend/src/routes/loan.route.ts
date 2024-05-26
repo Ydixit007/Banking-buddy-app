@@ -1,5 +1,5 @@
 import express from "express"
-import { applyNewLoan, getAllLoanforUser, getLoanDetails, updateLoan } from "../controllers/loan.controller";
+import { applyNewLoan, getAllLoanforUser, getAllLoans, getLoanDetails, updateLoan } from "../controllers/loan.controller";
 import { adminOnly } from "../middlewares/auth";
 
 const loanRoute = express.Router();
@@ -15,5 +15,8 @@ loanRoute.get("/all/:accountNumber", getAllLoanforUser);
 
 // get single loan
 loanRoute.get("/:id", getLoanDetails);
+
+// admin route
+loanRoute.get("/admin/all",adminOnly, getAllLoans);
 
 export default loanRoute;

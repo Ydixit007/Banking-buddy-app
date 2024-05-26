@@ -9,7 +9,7 @@ const schema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["applied", "graunted", "paid"],
+      enum: ["applied", "graunted", "paid", "declined"],
       default: "applied",
     },
     dueDate: { type: Date, required: [true, "Please select a due date"] },

@@ -53,7 +53,7 @@ const AdminTransacions = () => {
                         </thead>
                         <tbody>
                             {
-                                transactions.length > 0 && transactions.map((trans, index) => <tr>
+                                transactions.length > 0 && transactions.map((trans, index) => <tr key={index}>
                                     <th>{(index + 1) + (page * 10) - 10}</th>
                                     <td>{trans._id}</td>
                                     <td>{trans.sender}</td>

@@ -14,7 +14,7 @@ const schema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["deposit","transfer"],
+      enum: ["deposit","transfer", "loan"],
       default: "deposit",
     },
     amount: {
