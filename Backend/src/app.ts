@@ -36,3 +36,5 @@ app.listen(port, () => {
   console.log("App is now running!");
   connectDB(process.env.MONGODB_URI || "");
 });
+
+export default app
